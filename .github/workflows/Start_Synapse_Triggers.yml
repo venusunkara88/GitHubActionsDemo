@@ -1,0 +1,107 @@
+name: Dev_Synapse_START_TRIGGERS
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+env:
+  clientAppId: '${{ secrets.CLIENT_ID }}'
+  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+  subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
+  tenantId: '${{ secrets.TENANT_ID}}'
+  ResourceGroup: "RG-Metrolinx"
+  SynapseWorkspace: "testtriggerautomate"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # - name: Checkout collaboration branch
+      #   uses: actions/checkout@v3
+      # - name: Checkout workspace_publish_collaboration branch
+      #   uses: actions/checkout@v3
+      #   with:
+      #     ref: workspace_publish_collaboration
+      
+      - name: Login to Azure  
+        run: |
+         az login --service-principal -u ${{ env.clientAppId }} -p ${{ env.clientAppSecret }} --tenant ${{ env.tenantId }}
+         az account set --subscription ${{ env.subscriptionId }}
+          # # Input parameters
+          # param(
+          #     [string]$SynapseWorkspace = "testtriggerautomate",
+          #     [string]$ResourceGroup = "RG-Metrolinx",
+          #     [string]$Action = "start",
+          #     [string]$NameFilter = "",
+          #     [switch]$WhatIf
+          # )
+          
+          
+          
+          # $plainText = $env:TEST_PWD_CERTIFICATE
+          # $secureString = ConvertTo-SecureString $plainText -AsPlainText -Force
+          
+          # Connect-AzAccount -ServicePrincipal -ApplicationId "$ApplicationId" -TenantId "$TenantId" -CertificatePath "certificate.pfx" -CertificatePassword $secureString -WarningAction Ignore | Out-Null
+          # Set-AzContext -Subscription "$SubscriptionName"
+          
+          # # Get the specified workspace
+          # Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
+          # $workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
+          # if (-not($workspace)) { throw "Could not find workspace" }
+          # Write-Output $workspace
+          
+          
+          # # Get the list of triggers if the workspace 
+          # Write-Output "Getting triggers"
+          # $triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+          # if ($namefilter -ne '-') { $triggers = $triggers | Where-Object { $_.Name -match $namefilter } } # filter out names if the filter is specified
+          # Write-Output ("Found {0} triggers" -f $triggers.Count)
+          # if (-not($triggers)) { exit }
+          
+          
+          # # Continue only if there are triggers to be found
+          # if ($action -eq "stop") {
+          #     # Stop the triggers
+          #     Write-Output "Looping through triggers that are started ..."
+          #     $startedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Started" }
+          #     Write-Output ("Found {0} started triggers" -f $startedtriggers.Count)
+          
+          #     foreach ($t in $startedtriggers) {
+          #         Write-Output ("Stopping {0} ..." -f $t.Name);
+          #         try {
+          #             $result = Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+          #             Write-Output ("Result of stopping trigger {0}: {1}" -f $t.Name, $result)
+          #         }
+          #         catch {
+          #             Write-Output ("Something went wrong with {0}" -f $t.Name)
+          #             Write-Output $_
+          #         }
+          #     }
+          # }
+          
+          
+          # if ($triggers.Count -gt 0) {
+          #     if ($action -eq "start") {
+          #         # Start triggers
+          #         Write-Output "Looping through triggers that are stopped ..."
+          #         $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
+          #         Write-Output ("Found {0} stopped triggers" -f $stoppedtriggers.Count)
+          
+          #         foreach ($t in $stoppedtriggers) {
+          #             Write-Output ("Starting {0} ..." -f $t.Name);
+          #             try {
+          #                 $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+          #                 Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
+          #             }
+          #             catch {
+          #                 Write-Output ("Something went wrong with {0}" -f $t.Name)
+          #                 Write-Output $_
+          #             }
+          #         }
+          #     }
+          
+          #     Write-Output "... done"
+          # }
+      - name: Run the script as Administrator
+        shell: pwsh
+        run: |
+          .\Start_Triggers.ps1
