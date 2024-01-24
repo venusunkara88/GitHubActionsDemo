@@ -22,6 +22,7 @@ if ($namefilter -ne '-') { $triggers = $triggers | Where-Object { $_.Name -match
 Write-Output ("Found {0} triggers" -f $triggers.Count)
 if (-not($triggers)) { exit }
 
+Start-SynapseTriggers -SynapseWorkspace "$SynapseWorkspace"
 
 # Continue only if there are triggers to be found
 if ($triggers.Count -gt 0) {
