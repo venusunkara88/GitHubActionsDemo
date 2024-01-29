@@ -30,8 +30,8 @@ jobs:
            $trigger = Get-Content -Raw ${{ env.artifactDirectory }}\${{ env.triggerPath }}\$file | ConvertFrom-Json  
            if(([string](az synapse trigger list --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --query [].name) -match $trigger.name))
            {
-             #az synapse trigger start --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
-             az synapse trigger resume --workspace-name  ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
+             az synapse trigger start --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
+             #az synapse trigger resume --workspace-name  ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
              echo "Trigger started"$trigger.name
            }          
          }
