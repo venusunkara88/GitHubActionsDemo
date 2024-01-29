@@ -69,5 +69,6 @@ jobs:
       - name: Run the script as Adminstrator
         shell: pwsh
         run: |
+          dir
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
