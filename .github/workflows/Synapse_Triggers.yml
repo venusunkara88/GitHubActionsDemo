@@ -5,8 +5,8 @@ env:
   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
   subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
   tenantId: '${{ secrets.TENANT_ID}}'
-  TargetResourceGroup: "RG-Metrolinx"
-  TargetWorkspaceName: "testtriggerautomate"
+  resourcegroup: "RG-Metrolinx"
+  synapseworkspace: "testtriggerautomate"
 jobs:
   release:
     runs-on: windows-latest
