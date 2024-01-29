@@ -25,13 +25,18 @@ jobs:
 
       - name: Synapse Start Dev Trigger 
         run: |
-         foreach($file in Get-ChildItem -Path ${{ env.artifactDirectory }}\${{ env.triggerPath }}\*.json -Name)
-         {
-           $trigger = Get-Content -Raw ${{ env.artifactDirectory }}\${{ env.triggerPath }}\$file | ConvertFrom-Json  
-           if(([string](az synapse trigger list --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --query [].name) -match $trigger.name))
-           {
-             az synapse trigger start --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
-             #az synapse trigger resume --workspace-name  ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
-             echo "Trigger started"$trigger.name
-           }          
-         }
+         # foreach($file in Get-ChildItem -Path ${{ env.artifactDirectory }}\${{ env.triggerPath }}\*.json -Name)
+         # {
+         #   $trigger = Get-Content -Raw ${{ env.artifactDirectory }}\${{ env.triggerPath }}\$file | ConvertFrom-Json  
+         #   if(([string](az synapse trigger list --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --query [].name) -match $trigger.name))
+         #   {
+         #     az synapse trigger start --workspace-name ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
+         #     #az synapse trigger resume --workspace-name  ${{ vars.MX_SYNAPSE_WORKSPACE }} --name $trigger.name
+         #     echo "Trigger started"$trigger.name
+         #   }          
+         # }
+         # Get the specified workspace
+         Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
+         $workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
+         if (-not($workspace)) { throw "Could not find workspace" }
+         Write-Output $workspace
