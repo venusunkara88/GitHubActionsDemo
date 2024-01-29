@@ -26,6 +26,7 @@ jobs:
 
       - name: Synapse Start Dev Trigger 
         run: |
+          cd
          # foreach($file in Get-ChildItem -Path ${{ env.artifactDirectory }}\${{ env.triggerPath }}\*.json -Name)
          # {
          #   $trigger = Get-Content -Raw ${{ env.artifactDirectory }}\${{ env.triggerPath }}\$file | ConvertFrom-Json  
@@ -69,6 +70,5 @@ jobs:
       - name: Run the script as Adminstrator
         shell: pwsh
         run: |
-          dir
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
