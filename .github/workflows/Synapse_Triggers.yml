@@ -69,8 +69,7 @@ jobs:
       #   run: |
       #     $scriptPath = "Start_Triggers.ps1"
       #     pwsh -ExecutionPolicy Bypass -File $scriptPath
-      - name: Azure PowerShell Action
-        uses: Azure/powershell@v1.4.0
+      - name: PowerShell script
+        uses: Amadevus/pwsh-script@v2.0.3
         with:
-          inlineScript: ./Start_Triggers.ps1
-          azPSVersion: "latest"
+          script: ./Start_Triggers.ps1
