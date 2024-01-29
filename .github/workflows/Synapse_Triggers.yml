@@ -64,8 +64,8 @@ jobs:
          # $uri = "https://" + $workspaceName + ".dev.azuresynapse.net/triggers/" + $trigger.Name + "/start?api-version=2020-12-01"
          # Invoke-WebRequest -Method POST -Uri $uri -Headers $authHeader
          # }
-      - name: Azure PowerShell Action
-        uses: Azure/powershell@v1.4.0
-        with:
-          inlineScript: ./Start_Triggers.ps1
-          azPSVersion: "latest"
+      - name: Run the script as Adminstrator
+        shell: pwsh
+        run: |
+          $scriptPath = "Start_Triggers.ps1"
+          pwsh -ExecutionPolicy Bypass -File $scriptPath
