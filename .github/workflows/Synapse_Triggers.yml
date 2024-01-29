@@ -50,4 +50,4 @@ jobs:
          Write-Output ("Found {0} triggers" -f $triggers.Count)
          if (-not($triggers)) { exit }
 
-         Start-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }} -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+         Start-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }} -WhatIf:$WhatIf.IsPresent -PassThru
