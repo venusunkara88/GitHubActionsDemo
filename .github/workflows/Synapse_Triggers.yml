@@ -12,6 +12,10 @@ jobs:
     runs-on: windows-latest
     environment: dev
     steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
       - name: Checkout
         uses: actions/checkout@v3
       - name: Synapse Start Dev Trigger 
