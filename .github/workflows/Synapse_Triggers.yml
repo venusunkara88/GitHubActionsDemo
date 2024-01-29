@@ -7,6 +7,7 @@ env:
   tenantId: '${{ secrets.TENANT_ID}}'
   resourcegroup: "RG-Metrolinx"
   synapseworkspace: "testtriggerautomate"
+  action: "Start"
 jobs:
   release:
     runs-on: windows-latest
@@ -36,13 +37,6 @@ jobs:
          #   }          
          # }
          # Get the specified workspace
-         param(
-             [string]$SynapseWorkspace = "testtriggerautomate",
-             [string]$ResourceGroup = "RG-Metrolinx",
-             [string]$Action = "start",
-             [string]$NameFilter = "",
-             [switch]$WhatIf
-         )
 
          Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
          $workspace = Get-AzSynapseWorkspace -ResourceGroupName ${{ env.resourcegroup }} -Name ${{ env.synapseworkspace }}
