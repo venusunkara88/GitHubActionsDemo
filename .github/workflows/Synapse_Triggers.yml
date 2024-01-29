@@ -38,29 +38,34 @@ jobs:
          # }
          # Get the specified workspace
 
-         Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
-         $workspace = Get-AzSynapseWorkspace -ResourceGroupName ${{ env.resourcegroup }} -Name ${{ env.synapseworkspace }}
-         if (-not($workspace)) { throw "Could not find workspace" }
-         Write-Output $workspace
+         # Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
+         # $workspace = Get-AzSynapseWorkspace -ResourceGroupName ${{ env.resourcegroup }} -Name ${{ env.synapseworkspace }}
+         # if (-not($workspace)) { throw "Could not find workspace" }
+         # Write-Output $workspace
 
-         # Get the list of triggers if the workspace 
-         Write-Output "Getting triggers"
-         $triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
-         if ($namefilter -ne '-') { $triggers = $triggers | Where-Object { $_.Name -match $namefilter } } # filter out names if the filter is specified
-         Write-Output ("Found {0} triggers" -f $triggers.Count)
-         if (-not($triggers)) { exit }
+         # # Get the list of triggers if the workspace 
+         # Write-Output "Getting triggers"
+         # $triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+         # if ($namefilter -ne '-') { $triggers = $triggers | Where-Object { $_.Name -match $namefilter } } # filter out names if the filter is specified
+         # Write-Output ("Found {0} triggers" -f $triggers.Count)
+         # if (-not($triggers)) { exit }
 
-         $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
-         $authHeader = @{
-         'Content-Type' = 'application/octet-stream'
-         'Authorization' = 'Bearer ' + $token.Token
-         }
+         # $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
+         # $authHeader = @{
+         # 'Content-Type' = 'application/octet-stream'
+         # 'Authorization' = 'Bearer ' + $token.Token
+         # }
 
-         $triggers = Get-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }}
+         # $triggers = Get-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }}
 
-         ForEach ($trigger in $triggers)
-         {
-         "Disabling: " + $trigger.Name
-         $uri = "https://" + $workspaceName + ".dev.azuresynapse.net/triggers/" + $trigger.Name + "/start?api-version=2020-12-01"
-         Invoke-WebRequest -Method POST -Uri $uri -Headers $authHeader
-         }
+         # ForEach ($trigger in $triggers)
+         # {
+         # "Disabling: " + $trigger.Name
+         # $uri = "https://" + $workspaceName + ".dev.azuresynapse.net/triggers/" + $trigger.Name + "/start?api-version=2020-12-01"
+         # Invoke-WebRequest -Method POST -Uri $uri -Headers $authHeader
+         # }
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1.4.0
+        with:
+          inlineScript: ./Start_Triggers.ps1
+          azPSVersion: "latest"
