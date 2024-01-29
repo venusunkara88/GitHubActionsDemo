@@ -64,11 +64,12 @@ jobs:
          # $uri = "https://" + $workspaceName + ".dev.azuresynapse.net/triggers/" + $trigger.Name + "/start?api-version=2020-12-01"
          # Invoke-WebRequest -Method POST -Uri $uri -Headers $authHeader
          # }
-      # - name: Run the script as Adminstrator
-      #   shell: pwsh
-      #   run: |
-      #     $scriptPath = "Start_Triggers.ps1"
-      #     pwsh -ExecutionPolicy Bypass -File $scriptPath
+      - name: Run 
+        shell: pwsh
+        run: |
+          winget install --id Microsoft.Powershell --source winget
+          winget install --id Microsoft.Powershell.Preview --source winget
+
       - name: PowerShell script
         uses: Amadevus/pwsh-script@v2.0.3
         with:
