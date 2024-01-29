@@ -52,7 +52,7 @@ jobs:
 
          # Continue only if there are triggers to be found
          if ($triggers.Count -gt 0) {
-             if ($action -eq "start") {
+             if (${{ env.action }} -eq "start") {
                  # Start triggers
                  Write-Output "Looping through triggers that are stopped ..."
                  $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
