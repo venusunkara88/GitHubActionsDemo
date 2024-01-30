@@ -1,4 +1,4 @@
-# File: .github/workflows/workflow.yaml
+# File: .github/workflows/workflow.yml
 name: Dev_Stop_Synapse_Triggers
 
 on: [push]
