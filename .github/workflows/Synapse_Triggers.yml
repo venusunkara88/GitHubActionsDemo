@@ -49,7 +49,7 @@ jobs:
          Write-Output ("Found {0} triggers" -f $triggers.Count)
          if (-not($triggers)) { exit }
 
-         Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+         Start-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }} -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
          # Continue only if there are triggers to be found
          # Start triggers
          # Write-Output "Looping through triggers that are stopped ..."
