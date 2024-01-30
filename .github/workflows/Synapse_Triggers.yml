@@ -54,7 +54,6 @@ jobs:
                  Write-Output "Looping through triggers that are stopped ..."
                  $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
                  Write-Output ("Found {0} stopped triggers" -f $stoppedtriggers.Count)
-
                  foreach ($t in $stoppedtriggers) {
                      Write-Output ("Starting {0} ..." -f $t.Name);
                      try {
@@ -66,7 +65,6 @@ jobs:
                          Write-Output $_
                      }
                  }
-
              Write-Output "... done"
 
          # $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
