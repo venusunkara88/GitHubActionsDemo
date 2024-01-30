@@ -1,4 +1,4 @@
-name: Dev_Start_Stop_Synapse_Triggers
+name: Dev_Start_Synapse_Triggers
 on: [push]
 env:
   clientAppId: '${{ secrets.CLIENT_ID }}'
