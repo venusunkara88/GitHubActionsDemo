@@ -50,37 +50,28 @@ jobs:
          if (-not($triggers)) { exit }
 
          # Continue only if there are triggers to be found
-         # Start triggers
-         # Write-Output "Looping through triggers that are stopped ..."
-         # $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
-         # Write-Output ("Found {0} stopped triggers" -f $stoppedtriggers.Count)
-         foreach ($t in $stoppedtriggers) {
-             Write-Output ("Starting {0} ..." -f $t.Name);
-             try {
-                 $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
-                 Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
+         if ($triggers.Count -gt 0) {
+             if ($action -eq "start") {
+                 # Start triggers
+                 Write-Output "Looping through triggers that are stopped ..."
+                 $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
+                 Write-Output ("Found {0} stopped triggers" -f $stoppedtriggers.Count)
+
+                 foreach ($t in $stoppedtriggers) {
+                     Write-Output ("Starting {0} ..." -f $t.Name);
+                     try {
+                         $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+                         Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
+                     }
+                     catch {
+                         Write-Output ("Something went wrong with {0}" -f $t.Name)
+                         Write-Output $_
+                     }
+                 }
              }
-             catch {
-                 Write-Output ("Something went wrong with {0}" -f $t.Name)
-                 Write-Output $_
-             }
+
+             Write-Output "... done"
          }
-         # Write-Output "... done"
-
-         # $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
-         # $authHeader = @{
-         # 'Content-Type' = 'application/octet-stream'
-         # 'Authorization' = 'Bearer ' + $token.Token
-         # }
-
-         # $triggers = Get-AzSynapseTrigger -WorkspaceName ${{ env.synapseworkspace }}
-
-         # ForEach ($trigger in $triggers)
-         # {
-         # "Disabling: " + $trigger.Name
-         # $uri = "https://" + $workspaceName + ".dev.azuresynapse.net/triggers/" + $trigger.Name + "/start?api-version=2020-12-01"
-         # Invoke-WebRequest -Method POST -Uri $uri -Headers $authHeader
-         # }
 
 
       # - name: Run the script as Adminstrator
