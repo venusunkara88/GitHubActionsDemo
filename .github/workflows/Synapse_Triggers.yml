@@ -72,11 +72,6 @@ jobs:
 
              Write-Output "... done"
          }
-
-      - name: whoami 
-        run: |
-         whoami
-         sc config "NAME_OF_YOUR_SERVICE" obj= "NT AUTHORITY\SYSTEM" type=own
          
       - name: Run the script as Adminstrator
         shell: pwsh
