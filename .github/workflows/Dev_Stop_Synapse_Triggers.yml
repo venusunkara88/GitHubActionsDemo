@@ -7,7 +7,7 @@ name: Stop Trigger Synapse
 jobs:
 
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     steps:
     
     - uses: azure/login@v1
