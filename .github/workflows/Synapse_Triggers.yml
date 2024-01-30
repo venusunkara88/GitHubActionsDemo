@@ -9,7 +9,7 @@ env:
   synapseworkspace: "testtriggerautomate"
 jobs:
   release:
-    runs-on: windows-latest
+    runs-on: windows-2019
     environment: dev
     steps:
       - uses: azure/login@v1
@@ -72,9 +72,9 @@ jobs:
 
              Write-Output "... done"
          }
-         
-      - name: Run the script as Adminstrator
-        shell: pwsh
+      - uses: actions/checkout@v1   
+      - name: Run a one-line script
+        shell: powershell
         run: |
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
