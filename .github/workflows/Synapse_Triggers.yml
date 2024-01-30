@@ -22,7 +22,8 @@ jobs:
         run: |
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse
-
+          
+      - uses: actions/checkout@v1 
       - name: Synapse Start Dev Trigger 
         run: |
          # foreach($file in Get-ChildItem -Path ${{ env.artifactDirectory }}\${{ env.triggerPath }}\*.json -Name)
@@ -72,8 +73,8 @@ jobs:
 
              Write-Output "... done"
          }  
-      - name: Run a one-line script
-        shell: powershell
-        run: |
-          $scriptPath = "Start_Triggers.ps1"
-          pwsh -ExecutionPolicy Bypass -File $scriptPath
+      # - name: Run a one-line script
+      #   shell: powershell
+      #   run: |
+      #     $scriptPath = "Start_Triggers.ps1"
+      #     pwsh -ExecutionPolicy Bypass -File $scriptPath
