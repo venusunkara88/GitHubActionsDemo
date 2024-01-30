@@ -1,35 +1,34 @@
 # File: .github/workflows/workflow.yml
+name: Dev_Stop_Synapse_Triggers
 
 on: [push]
 
-name: Stop Trigger Synapse
-
+env:
+  clientAppId: '${{ secrets.CLIENT_ID }}'
+  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+  subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
+  tenantId: '${{ secrets.TENANT_ID}}'
+  resourcegroup: "RG-Metrolinx"
+  synapseworkspace: "testtriggerautomate"
 jobs:
-
-  build-and-deploy:
+  release:
     runs-on: windows-2019
+    environment: dev
     steps:
-    
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        enable-AzPSSession: true
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
 
-    - name: Azure CLI script
-      uses: azure/CLI@v1
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az account show
-    - name: Install the powershell dependencies
-      shell: pwsh
-      run: |
-        Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
-        Import-Module Az.Synapse
+      - name: Install the powershell dependencies
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+          Import-Module Az.Synapse
 
-    - uses: actions/checkout@v1 
-    - name: Run a one-line script
-      shell: powershell
-      run: |
-        $scriptPath = "Stop_Triggers.ps1"
-        pwsh -ExecutionPolicy Bypass -File $scriptPath
+      - uses: actions/checkout@v1 
+      - name: Run a one-line script
+        shell: powershell
+        run: |
+          $scriptPath = "Stop_Triggers.ps1"
+          pwsh -ExecutionPolicy Bypass -File $scriptPath
