@@ -27,17 +27,9 @@ jobs:
         Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
         Import-Module Az.Synapse
 
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Azure PowerShell Action
-      uses: Azure/powershell@v1.4.0
-      with:
-        inlineScript: ./Stop_Triggers.ps1
-        azPSVersion: "latest"
-
-    # - name: Run the script as Adminstrator
-    #   shell: pwsh
-    #   run: |
-    #     $scriptPath = "Stop_Triggers.ps1"
-    #     pwsh -ExecutionPolicy Bypass -File $scriptPath
+    - uses: actions/checkout@v1 
+    - name: Run a one-line script
+      shell: powershell
+      run: |
+        $scriptPath = "Stop_Triggers.ps1"
+        pwsh -ExecutionPolicy Bypass -File $scriptPath
