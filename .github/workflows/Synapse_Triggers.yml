@@ -49,15 +49,30 @@ jobs:
          Write-Output ("Found {0} triggers" -f $triggers.Count)
          if (-not($triggers)) { exit }
 
-         # Input parameters
-         param(
-             [string]$SynapseWorkspace = "testtriggerautomate",
-             [string]$ResourceGroup = "RG-Metrolinx",
-             [string]$Action = "start",
-             [string]$SubscriptionName = "YASH-Azure-DevOps-DataOps-MPN",
-             [string]$NameFilter = "",
-             [switch]$WhatIf
-         )
+      - name: Synapse Start Trigger
+        run: |
+         if ($triggers.Count -gt 0) {
+             if ($action -eq "start") {
+                 # Start triggers
+                 Write-Output "Looping through triggers that are stopped ..."
+                 $stoppedtriggers = $triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
+                 Write-Output ("Found {0} stopped triggers" -f $stoppedtriggers.Count)
+
+                 foreach ($t in $stoppedtriggers) {
+                     Write-Output ("Starting {0} ..." -f $t.Name);
+                     try {
+                         $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+                         Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
+                     }
+                     catch {
+                         Write-Output ("Something went wrong with {0}" -f $t.Name)
+                         Write-Output $_
+                     }
+                 }
+             }
+
+             Write-Output "... done"
+         }
 
          # $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
          # $authHeader = @{
