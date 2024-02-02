@@ -1,7 +1,6 @@
 name: Dev_Start_Synapse_Triggers
 on: 
   workflow_dispatch
-
 env:
   clientAppId: '${{ secrets.CLIENT_ID }}'
   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
