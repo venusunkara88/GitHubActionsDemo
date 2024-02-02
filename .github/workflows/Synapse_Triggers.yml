@@ -1,5 +1,4 @@
 name: Dev_Start_Synapse_Triggers
-
 on: 
   workflow_dispatch
 
