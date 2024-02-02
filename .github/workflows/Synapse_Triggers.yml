@@ -6,6 +6,9 @@ on:
         default: 'RG-Metrolinx'
       synapseworkspace:
         default: 'testtriggerautomate'
+  push:
+   branches:
+     - venusunkara88-patch-9
 env:
   clientAppId: '${{ secrets.CLIENT_ID }}'
   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
