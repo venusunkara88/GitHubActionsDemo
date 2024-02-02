@@ -1,9 +1,7 @@
 # Input parameters
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$SynapseWorkspace,
-    [Parameter(Mandatory = $true)]
-    [string]$ResourceGroup,
+    [string]$SynapseWorkspace = "testtriggerautomate",
+    [string]$ResourceGroup = "RG-Metrolinx",
     [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
