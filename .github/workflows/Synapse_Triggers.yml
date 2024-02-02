@@ -40,5 +40,5 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
-          ${{ github.event.inputs.resourcegroup }}
-          ${{ github.event.inputs.synapseworkspace }}
+          ref: ${{env.resourcegroup}}
+          ref: ${{env.synapseworkspace}}
