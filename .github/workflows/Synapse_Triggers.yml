@@ -4,8 +4,10 @@ on:
     inputs:
       resourcegroup:
         default: 'RG-Metrolinx'
+        required: true
       synapseworkspace:
         default: 'testtriggerautomate'
+        required: true
   push:
    branches:
      - venusunkara88-patch-9
@@ -38,3 +40,5 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
+          ${{ github.event.inputs.resourcegroup }}
+          ${{ github.event.inputs.synapseworkspace }}
