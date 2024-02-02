@@ -28,7 +28,9 @@ jobs:
         shell: powershell
         run: |
           $scriptPath = "Start_Triggers.ps1"
-          pwsh -ExecutionPolicy Bypass -File $scriptPath 
+          pwsh -ExecutionPolicy Bypass -File $scriptPath
+        env:
+          YOUR_VAR: ${{ vars.devtest }}
 
       # - uses: actions/checkout@v1 
       # - name: Run a one-line script
