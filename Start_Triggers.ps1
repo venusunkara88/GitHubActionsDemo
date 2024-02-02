@@ -1,7 +1,7 @@
 # Input parameters
 param(
-    [string]$SynapseWorkspace = "${SynapseWorkspace}",
-    [string]$ResourceGroup = "${ResourceGroup}",
+    [string]$SynapseWorkspace = "${devtest.SynapseWorkspace}",
+    [string]$ResourceGroup = "${devtest.ResourceGroup}",
     [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
