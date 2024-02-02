@@ -1,4 +1,4 @@
-name: Dev_Start_Synapse_Triggers
+name: Dev_Start_Synapse_Triggerss
 on: 
   workflow_dispatch
 
