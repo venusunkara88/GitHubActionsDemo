@@ -1,5 +1,11 @@
 name: Dev_Start_Synapse_Triggers
-on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      resourcegroup:
+        default: 'RG-Metrolinx'
+      synapseworkspace:
+        default: 'testtriggerautomate'
 env:
   clientAppId: '${{ secrets.CLIENT_ID }}'
   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
@@ -29,5 +35,3 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
-        env:
-          YOUR_VAR: ${{ vars.devtest }}
