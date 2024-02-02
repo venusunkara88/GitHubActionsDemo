@@ -1,16 +1,7 @@
 name: Dev_Start_Synapse_Triggers
 on: 
-  workflow_dispatch:
-    inputs:
-      resourcegroup:
-        default: 'RG-Metrolinx'
-        required: true
-      synapseworkspace:
-        default: 'testtriggerautomate'
-        required: true
-  push:
-   branches:
-     - venusunkara88-patch-9
+  workflow_dispatch
+
 env:
   clientAppId: '${{ secrets.CLIENT_ID }}'
   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
