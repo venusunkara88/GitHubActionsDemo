@@ -1,7 +1,9 @@
 # Input parameters
 param(
-    [string]$SynapseWorkspace = "",
-    [string]$ResourceGroup = "",
+    [Parameter(Mandatory = $true)]
+    [string]$SynapseWorkspace,
+    [Parameter(Mandatory = $true)]
+    [string]$ResourceGroup,
     [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
