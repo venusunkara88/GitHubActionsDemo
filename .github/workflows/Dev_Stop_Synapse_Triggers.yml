@@ -3,17 +3,12 @@ name: Dev_Stop_Synapse_Triggers
 
 on: [push]
 
-env:
-  clientAppId: '${{ secrets.CLIENT_ID }}'
-  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
-  subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
-  tenantId: '${{ secrets.TENANT_ID}}'
-  resourcegroup: "RG-Metrolinx"
-  synapseworkspace: "testtriggerautomate"
 jobs:
   release:
-    runs-on: windows-2019
-    environment: dev
+    runs-on: windows-latest
+    env:
+      SynapseWorkspace: "testtriggerautomate"
+      ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
         with:
