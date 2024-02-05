@@ -32,7 +32,7 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           #pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
-          pwsh -ExecutionPolicy Bypass -File 
+          pwsh -ExecutionPolicy Bypass -File $scriptPath
         env: 
           SynapseWorkspace: "testtriggerautomate"
           ResourceGroup: "RG-Metrolinx"
