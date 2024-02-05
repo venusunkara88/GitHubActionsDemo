@@ -32,5 +32,5 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           #pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
-          pwsh -ExecutionPolicy Bypass -File $scriptPath "${{ env:SynapseWorkspace }}" "${{ env:ResourceGroup }}"
+          pwsh -ExecutionPolicy Bypass -File $scriptPath "${{ env:SynapseWorkspace }} ${{ env:ResourceGroup }}"
 
