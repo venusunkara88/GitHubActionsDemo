@@ -26,10 +26,6 @@ jobs:
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse 
 
-      - name: Print the value of devtest
-        run: |
-          echo ${{ vars.devtest }}
-
       - uses: actions/checkout@v1 
       - name: Run a one-line script
         shell: powershell
