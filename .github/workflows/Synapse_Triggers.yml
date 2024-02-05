@@ -33,8 +33,7 @@ jobs:
           $scriptPath = "Start_Triggers.ps1"
           #pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
           pwsh -ExecutionPolicy Bypass -File $scriptPath
-        env: 
-          SynapseWorkspace: "testtriggerautomate"
-          ResourceGroup: "RG-Metrolinx"
+        env:
+          MyVariable: ${{ secrets.MY_VARIABLE }}
           
 
