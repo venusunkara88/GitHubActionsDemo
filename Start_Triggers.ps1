@@ -6,13 +6,14 @@ param(
     [string]$NameFilter = "",
     [switch]$WhatIf
 )
-
+$env:SynapseWorkspace
+$env:ResourceGroup
 
 # Get the specified workspace
-Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
-#Write-Output ("Getting workspace {0} in resource group {1}" -f "$env:SynapseWorkspace", "$env:ResourceGroup")
-$workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
-#$workspace = Get-AzSynapseWorkspace -ResourceGroupName "$env:ResourceGroup" -Name "$env:SynapseWorkspace"
+#Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
+Write-Output ("Getting workspace {0} in resource group {1}" -f "$env:SynapseWorkspace", "$env:ResourceGroup")
+#$workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
+$workspace = Get-AzSynapseWorkspace -ResourceGroupName "$env:ResourceGroup" -Name "$env:SynapseWorkspace"
 if (-not($workspace)) { throw "Could not find workspace" }
 Write-Output $workspace
 
