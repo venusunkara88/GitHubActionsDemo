@@ -25,9 +25,8 @@ jobs:
         shell: powershell
         run: |
           $scriptPath = "Start_Triggers.ps1"
-          #pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
           pwsh -ExecutionPolicy Bypass -File $scriptPath
-        env:
-          MyVariable: ${{ secrets.MY_VARIABLE }}
+        # env:
+        #   MyVariable: ${{ secrets.MY_VARIABLE }}
           
 
