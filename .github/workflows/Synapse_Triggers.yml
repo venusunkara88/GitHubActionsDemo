@@ -27,6 +27,8 @@ jobs:
       - name: Run a one-line script
         shell: powershell
         run: |
+          $synapseworkspace = "${{ vars.devtest.synapseworkspace }}"
+          $resourcegroup = "${{ vars.devtest.resourcegroup }}"
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
 
