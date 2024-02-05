@@ -1,12 +1,6 @@
 name: Dev_Start_Synapse_Triggers
 on: [push]
-# env:
-#   clientAppId: '${{ secrets.CLIENT_ID }}'
-#   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
-#   subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
-#   tenantId: '${{ secrets.TENANT_ID}}'
-#   resourcegroup: "RG-Metrolinx"
-#   synapseworkspace: "testtriggerautomate"
+
 jobs:
   release:
     runs-on: windows-latest
@@ -31,9 +25,9 @@ jobs:
         shell: powershell
         run: |
           $scriptPath = "Start_Triggers.ps1"
-          #pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
-          pwsh -ExecutionPolicy Bypass -File $scriptPath
-        env:
-          MyVariable: ${{ secrets.MY_VARIABLE }}
+          pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
+        #   pwsh -ExecutionPolicy Bypass -File $scriptPath
+        # env:
+        #   MyVariable: ${{ secrets.MY_VARIABLE }}
           
 
