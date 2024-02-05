@@ -10,7 +10,7 @@ on: [push]
 jobs:
   release:
     runs-on: windows-latest
-    environment: dev
+    #environment: dev
     env:
       SynapseWorkspace: "testtriggerautomate"
       ResourceGroup: "RG-Metrolinx"
