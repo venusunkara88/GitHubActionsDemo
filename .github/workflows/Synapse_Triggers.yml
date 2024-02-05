@@ -5,9 +5,9 @@ jobs:
   release:
     runs-on: windows-latest
     #environment: dev
-    # env:
-    #   SynapseWorkspace: "testtriggerautomate"
-    #   ResourceGroup: "RG-Metrolinx"
+    env:
+      SynapseWorkspace: "testtriggerautomate"
+      ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
         with:
