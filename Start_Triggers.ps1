@@ -37,7 +37,7 @@ if ($triggers.Count -gt 0) {
         foreach ($t in $stoppedtriggers) {
             Write-Output ("Starting {0} ..." -f $t.Name);
             try {
-                $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+                $result = Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
                 Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
             }
             catch {
