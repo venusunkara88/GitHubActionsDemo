@@ -1,7 +1,7 @@
 # Input parameters
 param(
-    [string]$SynapseWorkspace = "testtriggerautomate",
-    [string]$ResourceGroup = "RG-Metrolinx",
+    #[string]$SynapseWorkspace = "testtriggerautomate",
+    #[string]$ResourceGroup = "RG-Metrolinx",
     [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
@@ -10,7 +10,7 @@ param(
 
 # Get the specified workspace
 Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
-$workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
+$workspace = Get-AzSynapseWorkspace -ResourceGroupName "$resourcegroup" -Name "$synapseworkspace"
 if (-not($workspace)) { throw "Could not find workspace" }
 Write-Output $workspace
 
