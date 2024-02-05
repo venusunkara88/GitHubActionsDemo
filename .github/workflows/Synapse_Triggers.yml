@@ -4,7 +4,6 @@ on: [push]
 jobs:
   release:
     runs-on: windows-latest
-    #environment: dev
     env:
       SynapseWorkspace: "testtriggerautomate"
       ResourceGroup: "RG-Metrolinx"
@@ -26,7 +25,5 @@ jobs:
         run: |
           $scriptPath = "Start_Triggers.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
-        # env:
-        #   MyVariable: ${{ secrets.MY_VARIABLE }}
           
 
