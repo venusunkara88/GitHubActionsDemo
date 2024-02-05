@@ -1,16 +1,19 @@
 name: Dev_Start_Synapse_Triggers
 on: [push]
-env:
-  clientAppId: '${{ secrets.CLIENT_ID }}'
-  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
-  subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
-  tenantId: '${{ secrets.TENANT_ID}}'
-  resourcegroup: "RG-Metrolinx"
-  synapseworkspace: "testtriggerautomate"
+# env:
+#   clientAppId: '${{ secrets.CLIENT_ID }}'
+#   clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+#   subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
+#   tenantId: '${{ secrets.TENANT_ID}}'
+#   resourcegroup: "RG-Metrolinx"
+#   synapseworkspace: "testtriggerautomate"
 jobs:
   release:
     runs-on: windows-latest
     environment: dev
+    env:
+      SynapseWorkspace: "testtriggerautomate"
+      ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
         with:
@@ -27,8 +30,6 @@ jobs:
       - name: Run a one-line script
         shell: powershell
         run: |
-          $synapseworkspace = "${{ vars.synapseworkspace }}"
-          $resourcegroup = "${{ vars.resourcegroup }}"
           $scriptPath = "Start_Triggers.ps1"
-          pwsh -ExecutionPolicy Bypass -File $scriptPath
+          pwsh -ExecutionPolicy Bypass -File $scriptPath $env:SynapseWorkspace $env:ResourceGroup
 
