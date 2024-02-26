@@ -1,12 +1,14 @@
 name: Dev_Start_Synapse_Triggers
-on: [push]
+# on: [push]
+on: 
+  workflow_dispatch
 
 jobs:
   release:
     runs-on: windows-latest
     env:
       # SynapseWorkspace: "testtriggerautomate"
-      SynapseWorkspace: [testtriggerautomate, test2mx]
+      SynapseWorkspace: [testtriggerautomate,test2mx]
       ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
