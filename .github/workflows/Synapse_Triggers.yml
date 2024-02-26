@@ -1,0 +1,30 @@
+name: Dev_Start_Synapse_Triggers
+# on: [push]
+on: 
+  workflow_dispatch
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      # SynapseWorkspace: "testtriggerautomate"
+      SynapseWorkspace: [testtriggerautomate,test2mx]
+      ResourceGroup: "RG-Metrolinx"
+    steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Install the powershell dependencies
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+          Import-Module Az.Synapse 
+
+      - uses: actions/checkout@v1 
+      - name: Run a one-line script
+        shell: powershell
+        run: |
+          $scriptPath = "Start_Triggers.ps1"
+          pwsh -ExecutionPolicy Bypass -File $scriptPath

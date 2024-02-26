@@ -1,16 +1,15 @@
 # Input parameters
 param(
-    [string]$SynapseWorkspace = "testtriggerautomate",
-    [string]$ResourceGroup = "RG-Metrolinx",
     [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
 )
-
+$env:SynapseWorkspace
+$env:ResourceGroup
 
 # Get the specified workspace
-Write-Output ("Getting workspace {0} in resource group {1}" -f $synapseworkspace, $resourcegroup)
-$workspace = Get-AzSynapseWorkspace -ResourceGroupName $resourcegroup -Name $synapseworkspace
+Write-Output ("Getting workspace {0} in resource group {1}" -f "$env:SynapseWorkspace", "$env:ResourceGroup")
+$workspace = Get-AzSynapseWorkspace -ResourceGroupName "$env:ResourceGroup" -Name "$env:SynapseWorkspace"
 if (-not($workspace)) { throw "Could not find workspace" }
 Write-Output $workspace
 
@@ -34,7 +33,7 @@ if ($triggers.Count -gt 0) {
         foreach ($t in $stoppedtriggers) {
             Write-Output ("Starting {0} ..." -f $t.Name);
             try {
-                $result = Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+                $result = Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
                 Write-Output ("Result of starting trigger {0}: {1}" -f $t.Name, $result)
             }
             catch {
@@ -43,6 +42,5 @@ if ($triggers.Count -gt 0) {
             }
         }
     }
-
     Write-Output "... done"
 }
