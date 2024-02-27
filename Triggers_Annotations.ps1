@@ -28,7 +28,7 @@ foreach ($trigger in $Triggers) {
  if(($Trigger.Properties.Annotations[0] -eq $Annotations) -and ($Trigger.Properties.RuntimeState -eq "Started"))
     {
 # Stop the Triggers that were in "Started" state
-Stop-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -Force
+Stop-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name
 $startedTriggers += $trigger.Name
 Write-Host "Stopped trigger $($trigger.Name)."
 } elseif ($trigger.Triggerstate -eq "Stopped") {
@@ -41,6 +41,6 @@ Write-Host "Stopped trigger $($trigger.Name)."
 
 # Start the Triggers that were in "Started" state before stopping
 foreach ($triggerName in $startedTriggers) {
-    Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $t.name -WhatIf:$WhatIf.IsPresent -PassThru
+    Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -WhatIf:$WhatIf.IsPresent -PassThru
     Write-Host "Started trigger $triggerName."
 }
