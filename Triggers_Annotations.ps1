@@ -24,19 +24,19 @@ if ($namefilter -ne '-') { $triggers = $triggers | Where-Object { $_.Name -match
 Write-Output ("Found {0} triggers" -f $triggers.Count)
 if (-not($triggers)) { exit }
 
-foreach ($trigger in $Triggers) {
- if(($Trigger.Properties.Annotations[0] -eq $Annotations) -and ($Trigger.Properties.RuntimeState -eq "Started"))
-    {
-# Stop the Triggers that were in "Started" state
-Stop-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name
-$startedTriggers += $trigger.Name
-Write-Host "Stopped trigger $($trigger.Name)."
-} elseif ($trigger.Triggerstate -eq "Stopped") {
-    Write-Host "Trigger $($trigger.Name) is already in a stopped state."
-} else {
-    Write-Host "Trigger $($trigger.Name) is in an unknown state: $($trigger.Triggerstate)."
-}
-}
+# foreach ($trigger in $Triggers) {
+#  if(($Trigger.Properties.Annotations[0] -eq $Annotations) -and ($Trigger.Properties.RuntimeState -eq "Started"))
+#     {
+# # Stop the Triggers that were in "Started" state
+# Stop-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name
+# $startedTriggers += $trigger.Name
+# Write-Host "Stopped trigger $($trigger.Name)."
+# } elseif ($trigger.Triggerstate -eq "Stopped") {
+#     Write-Host "Trigger $($trigger.Name) is already in a stopped state."
+# } else {
+#     Write-Host "Trigger $($trigger.Name) is in an unknown state: $($trigger.Triggerstate)."
+# }
+# }
 
 
 # Start the Triggers that were in "Started" state before stopping
