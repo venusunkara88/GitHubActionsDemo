@@ -39,8 +39,8 @@ Write-Host "Stopped trigger $($trigger.Name)."
 }
 
 
-# Start the Triggers that were in "Started" state before stopping
-foreach ($triggerName in $startedTriggers) {
-    Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -WhatIf:$WhatIf.IsPresent -PassThru
-    Write-Host "Started trigger $triggerName."
-}
+# # Start the Triggers that were in "Started" state before stopping
+# foreach ($triggerName in $startedTriggers) {
+#     Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -WhatIf:$WhatIf.IsPresent -PassThru
+#     Write-Host "Started trigger $triggerName."
+# }
