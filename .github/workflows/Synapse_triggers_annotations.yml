@@ -28,6 +28,13 @@ jobs:
           $scriptPath = "Triggers_Annotations.ps1"
           pwsh -ExecutionPolicy Bypass -File $scriptPath
 
+      - uses: actions/checkout@v1 
+      - name: Run a one-line script
+        shell: powershell
+        run: |
+          $scriptPath = "Triggers_Annotations_Start.ps1"
+          pwsh -ExecutionPolicy Bypass -File $scriptPath  
+
       # - uses: actions/checkout@v1 
       # - name: Run a one-line script
       #   shell: powershell
