@@ -2,7 +2,7 @@ $env:SynapseWorkspace = "testtriggerautomate"
 $env:ResourceGroup = "RG-Metrolinx"
 $Annotations = "LDS"
 param(                                                                                                         
-    [string]$Action = "start",
+    # [string]$Action = "start",
     [string]$NameFilter = "",
     [switch]$WhatIf
 )
