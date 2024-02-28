@@ -8,7 +8,6 @@ jobs:
     runs-on: windows-latest
     env:
       SynapseWorkspace: "testtriggerautomate"
-      # SynapseWorkspace: [testtriggerautomate,test2mx]
       ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
