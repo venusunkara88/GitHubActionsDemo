@@ -1,12 +1,13 @@
 # Input parameters
-param(
-    [string]$Action = "start",
-    [string]$NameFilter = "",
-    [switch]$WhatIf
-)
+# param(
+#     [string]$Action = "start",
+#     [string]$NameFilter = "",
+#     [switch]$WhatIf
+# )
 $env:SynapseWorkspace
 $env:ResourceGroup
 $Annotations = "LDS"
+$NameFilter = ""
 
 # Get the specified workspace 
 Write-Output ("Getting workspace {0} in resource group {1}" -f "$env:SynapseWorkspace", "$env:ResourceGroup")
