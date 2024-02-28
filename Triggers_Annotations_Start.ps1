@@ -1,12 +1,16 @@
-$env:SynapseWorkspace = "testtriggerautomate"
-$env:ResourceGroup = "RG-Metrolinx"
+# $env:SynapseWorkspace = "testtriggerautomate"
+# $env:ResourceGroup = "RG-Metrolinx"
+# $Annotations = "LDS"
+# Input parameters
+# param(
+#     [string]$Action = "start",
+#     [string]$NameFilter = "",
+#     [switch]$WhatIf
+# )
+$env:SynapseWorkspace
+$env:ResourceGroup
 $Annotations = "LDS"
-param(                                                                                                         
-    # [string]$Action = "start",
-    [string]$NameFilter = "",
-    [switch]$WhatIf
-)
-
+$NameFilter = ""
 
 Write-Output ("Getting workspace {0} in resource group {1}" -f "$env:SynapseWorkspace", "$env:ResourceGroup")
 $workspace = Get-AzSynapseWorkspace -ResourceGroupName "$env:ResourceGroup" -Name "$env:SynapseWorkspace"
