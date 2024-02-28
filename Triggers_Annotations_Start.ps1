@@ -32,7 +32,7 @@ foreach ($trigger in $Triggers) {
 #Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -WhatIf:$WhatIf.IsPresent -PassThru
 $startedTriggers += $trigger.Name
 foreach ($triggerName in $startedTriggers) {
-    Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name -WhatIf:$WhatIf.IsPresent -PassThru
+    Start-AzSynapseTrigger -WorkspaceName "$env:SynapseWorkspace" -Name $trigger.Name
     Write-Host "Started trigger $triggerName."
 }
 }
