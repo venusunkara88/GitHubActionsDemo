@@ -36,7 +36,8 @@ jobs:
       #     pwsh -ExecutionPolicy Bypass -File $scriptPath  
 
       - name: Run Azure PowerShell inline script
-        uses: azure/powershell@v1
+        # uses: azure/powershell@v1
+        uses: AzurePowerShell@5
         with:
           azPSVersion: "latest"
           inlineScript: |
