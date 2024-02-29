@@ -50,9 +50,8 @@ jobs:
 
             $startedTriggers = @()
 
-            $Triggers
             foreach ($trigger in $Triggers) {
-            $trigger
+            Write-Host "Start"
              if($Trigger.Properties.RuntimeState -eq "Started")
                 {
             Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
