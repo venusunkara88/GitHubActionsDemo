@@ -40,31 +40,34 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
-            $ResourceGroupName = "RG-Metrolinx"
-            $SynapseWorkspace = “testtriggerautomate”
+            # $ResourceGroupName = "RG-Metrolinx"
+            # $SynapseWorkspace = “testtriggerautomate”
 
-            $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
-            $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+            # $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
+            # $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
 
-            #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
+            # #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
 
-            $startedTriggers = @()
+            # $startedTriggers = @()
 
-            foreach ($trigger in $Triggers) {
-            Write-Host "Start"
-            $trigger.Name
-             if($Trigger.Properties.RuntimeState -eq "Started")
-                {
-                Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
-                $startedTriggers += $trigger.Name
-                Write-Host "Stopped trigger $($trigger.Name)."
-            } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
-                Write-Host "Trigger $($trigger.Name) is already in a stopped state."
-            }
-            }
+            # foreach ($trigger in $Triggers) {
+            # Write-Host "Start"
+            # $trigger.Name
+            #  if($Trigger.Properties.RuntimeState -eq "Started")
+            #     {
+            #     Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
+            #     $startedTriggers += $trigger.Name
+            #     Write-Host "Stopped trigger $($trigger.Name)."
+            # } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
+            #     Write-Host "Trigger $($trigger.Name) is already in a stopped state."
+            # }
+            # }
 
 
-            foreach ($triggerName in $startedTriggers) {
-                Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-                Write-Host "Started trigger $triggerName."
-            }
+            # foreach ($triggerName in $startedTriggers) {
+            #     Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
+            #     Write-Host "Started trigger $triggerName."
+            # }
+            Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 1"
+            Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 3"
+            
