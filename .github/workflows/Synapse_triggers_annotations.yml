@@ -38,6 +38,7 @@ jobs:
       - name: Run Azure PowerShell inline script
         uses: azure/powershell@v1
         with:
+          azPSVersion: "latest"
           inlineScript: |
             $ResourceGroupName = "RG-Metrolinx"
             $SynapseWorkspace = “testtriggerautomate”
