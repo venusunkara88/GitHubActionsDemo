@@ -51,8 +51,8 @@ jobs:
             $startedTriggers = @()
 
             foreach ($trigger in $Triggers) {
-            if($Trigger.Properties.RuntimeState -eq "Started")
-            {
+             if($Trigger.Properties.RuntimeState -eq "Started")
+                {
             Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
             $startedTriggers += $trigger.Name
             Write-Host "Stopped trigger $($trigger.Name)."
@@ -63,6 +63,6 @@ jobs:
 
 
             foreach ($triggerName in $startedTriggers) {
-            Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
+                Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
                 Write-Host "Started trigger $triggerName."
             }
