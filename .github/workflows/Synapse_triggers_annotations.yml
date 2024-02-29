@@ -50,6 +50,7 @@ jobs:
 
             $startedTriggers = @()
 
+            $Triggers
             foreach ($trigger in $Triggers) {
              if($Trigger.Properties.RuntimeState -eq "Started")
                 {
