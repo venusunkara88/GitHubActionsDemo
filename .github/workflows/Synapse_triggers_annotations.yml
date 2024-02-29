@@ -19,7 +19,10 @@ jobs:
         shell: pwsh
         run: |
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
-          Import-Module Az.Synapse 
+          Import-Module Az.Synapse
+
+          Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 1"
+          Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 3"
 
       # - uses: actions/checkout@v1 
       # - name: Run a one-line script
@@ -36,11 +39,11 @@ jobs:
       #     pwsh -ExecutionPolicy Bypass -File $scriptPath  
 
 
-      - name: Azure CLI Action
-        uses: Azure/cli@v1.0.9
-        with:
-          azcliversion: "latest"
-          inlineScript: |
+      # - name: Run Azure PowerShell inline script
+      #   uses: azure/powershell@v1
+      #   with:
+      #     azPSVersion: "latest"
+      #     inlineScript: |
             # $ResourceGroupName = "RG-Metrolinx"
             # $SynapseWorkspace = “testtriggerautomate”
 
@@ -69,6 +72,6 @@ jobs:
             #     Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
             #     Write-Host "Started trigger $triggerName."
             # }
-            Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 1"
-            Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 3"
+            #Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 1"
+            #Stop-AzSynapseTrigger -WorkspaceName "testtriggerautomate" -Name "Trigger 3"
             
