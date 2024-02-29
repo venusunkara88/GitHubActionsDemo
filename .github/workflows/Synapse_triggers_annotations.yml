@@ -35,10 +35,11 @@ jobs:
       #     $scriptPath = "Triggers_Annotations_Start.ps1"
       #     pwsh -ExecutionPolicy Bypass -File $scriptPath  
 
-      - name: Run Azure PowerShell inline script
-        uses: azure/powershell@v1
+
+      - name: Azure CLI Action
+        uses: Azure/cli@v1.0.9
         with:
-          azPSVersion: "latest"
+          azcliversion: "latest"
           inlineScript: |
             # $ResourceGroupName = "RG-Metrolinx"
             # $SynapseWorkspace = “testtriggerautomate”
