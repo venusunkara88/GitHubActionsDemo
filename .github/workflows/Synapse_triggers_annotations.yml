@@ -39,8 +39,8 @@ jobs:
       - name: Run a one-line script
         shell: powershell
         run: |
-          $ResourceGroupName = "RG-Metrolinx"
-          $SynapseWorkspace = “testtriggerautomate”
+          ResourceGroupName = "RG-Metrolinx"
+          SynapseWorkspace = “testtriggerautomate”
 
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
