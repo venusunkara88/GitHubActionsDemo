@@ -50,16 +50,16 @@ jobs:
 
             $startedTriggers = @()
 
-            # foreach ($trigger in $Triggers) {
-            #  if($Trigger.Properties.RuntimeState -eq "Started")
-            #     {
-            # Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
-            # $startedTriggers += $trigger.Name
-            # Write-Host "Stopped trigger $($trigger.Name)."
-            # } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
-            #     Write-Host "Trigger $($trigger.Name) is already in a stopped state."
-            # }
-            # }
+            foreach ($trigger in $Triggers) {
+             if($Trigger.Properties.RuntimeState -eq "Started")
+                {
+            Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
+            $startedTriggers += $trigger.Name
+            Write-Host "Stopped trigger $($trigger.Name)."
+            } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
+                Write-Host "Trigger $($trigger.Name) is already in a stopped state."
+            }
+            }
 
 
             foreach ($triggerName in $startedTriggers) {
