@@ -6,16 +6,16 @@ on: [push]
 jobs:
   release:
     runs-on: windows-latest
-    env:
-      SynapseWorkspace: "testtriggerautomate"
-      ResourceGroup: "RG-Metrolinx"
+    # env:
+    #   SynapseWorkspace: "testtriggerautomate"
+    #   ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
 
-      - name: Install the powershell dependencies and script
+      - name: Install the powershell dependencies and run script
         shell: pwsh
         run: |
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
@@ -48,49 +48,3 @@ jobs:
               Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               Write-Host "Started trigger $triggerName."
           }
-
-      # - uses: actions/checkout@v1 
-      # - name: Run a one-line script
-      #   shell: powershell
-      #   run: |
-      #     $scriptPath = "Triggers_Annotations.ps1"
-      #     pwsh -ExecutionPolicy Bypass -File $scriptPath
-
-      # - uses: actions/checkout@v1 
-      # - name: Run a one-line script
-      #   shell: powershell
-      #   run: |
-      #     $scriptPath = "Triggers_Annotations_Start.ps1"
-      #     pwsh -ExecutionPolicy Bypass -File $scriptPath  
-
-
-      # - name: Install the powershell dependencies script
-      #   shell: pwsh
-      #   run: |
-            # $ResourceGroupName = "RG-Metrolinx"
-            # $SynapseWorkspace = “testtriggerautomate”
-
-            # $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
-            # $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
-
-            # #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
-
-            # $startedTriggers = @()
-
-            # foreach ($trigger in $Triggers) {
-            # Write-Host "Start"
-            # $trigger.Name
-            #  if($Trigger.Properties.RuntimeState -eq "Started")
-            #     {
-            #     Stop-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $trigger.Name
-            #     $startedTriggers += $trigger.Name
-            #     Write-Host "Stopped trigger $($trigger.Name)."
-            # } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
-            #     Write-Host "Trigger $($trigger.Name) is already in a stopped state."
-            # }
-            # }
-
-            # foreach ($triggerName in $startedTriggers) {
-            #     Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-            #     Write-Host "Started trigger $triggerName."
-            # }
