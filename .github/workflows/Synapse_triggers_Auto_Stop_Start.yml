@@ -1,7 +1,7 @@
 name: Synapse_Triggers_Annotations
 on: [push]
 # on: 
-#  workflow_dispatch
+# workflow_dispatch
 jobs:
   release:
     runs-on: windows-latest
