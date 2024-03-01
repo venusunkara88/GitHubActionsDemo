@@ -65,7 +65,7 @@ jobs:
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
           $triggertostop = Get-Content -Path "started_triggers.json"
           echo "-----list-json-file-----"
-          cat started_trigger.json
+          cat D:\a\GitHubActionsDemo\GitHubActionsDemo\started_trigger.json
           echo $triggertostop
           foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
