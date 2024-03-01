@@ -21,13 +21,8 @@ jobs:
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse
 
-          # $ResourceGroupName = "RG-Metrolinx"
-          # $SynapseWorkspace = “testtriggerautomate”
           $ResourceGroupName = '${{ env.ResourceGroup }}'
           $SynapseWorkspace = '${{ env.SynapseWorkspace }}'
-
-          $SynapseWorkspace
-          $ResourceGroupName
           
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
