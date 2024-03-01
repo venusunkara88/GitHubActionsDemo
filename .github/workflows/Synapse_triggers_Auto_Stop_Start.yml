@@ -66,6 +66,7 @@ jobs:
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
           $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
           echo "-----list-json-file-----"
+          echo $triggertostop
           $file = "started_triggers.json"
           $item = Get-Item $file
           $filePath = $item.FullName
