@@ -79,6 +79,7 @@ jobs:
           
           foreach ($triggerName in $triggertostop) {
               $apicall = "https://${{ env.SynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+              echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               # Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
