@@ -44,8 +44,17 @@ jobs:
           }
           }
 
+          # foreach ($triggerName in $startedTriggers) {
+          #     # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
+          #     Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
+          #     Write-Host "Started trigger $triggerName."
+          # }
+
+      - name: run script
+        shell: pwsh
+        run: |
           foreach ($triggerName in $startedTriggers) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
               Write-Host "Started trigger $triggerName."
-          }
+          }  
