@@ -38,6 +38,7 @@ jobs:
           }
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
           Out-File -FilePath "started_triggers.json" -InputObject $jsonString
+          Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name "Trigger 1"
           # foreach ($triggerName in $startedTriggers) {
           #     # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
           #     Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
