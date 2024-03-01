@@ -69,7 +69,7 @@ jobs:
           echo $pwd
           Get-ChildItem
           Tree /F
-          cat D:\started_trigger.json
+          cat \started_trigger.json
           echo $triggertostop
           foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
