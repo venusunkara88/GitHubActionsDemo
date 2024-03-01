@@ -65,8 +65,10 @@ jobs:
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
           $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
+
+          $powershellArray = ConvertFrom-Json -InputObject $triggertostop
           echo "-----list-json-file-----"
-          echo $triggertostop
+          echo $powershellArray
           $file = "started_triggers.json"
           $item = Get-Item $file
           $filePath = $item.FullName
@@ -77,7 +79,7 @@ jobs:
             'Authorization' = 'Bearer ' + $token.Token
           }
           
-          foreach ($triggerName in $triggertostop) {
+          foreach ($triggerName in $powershellArray) {
               $apicall = "https://${{ env.SynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
