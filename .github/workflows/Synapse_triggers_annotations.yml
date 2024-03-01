@@ -26,6 +26,9 @@ jobs:
           $ResourceGroupName = "${{ vars.devtest.RESOURCEGROUP }}"
           $SynapseWorkspace = “${{ vars.devtest.SYNAPSEWORKSPACE }}”
 
+          $ResourceGroupName
+          $SynapseWorkspace
+          
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName ${{ vars.devtest.RESOURCEGROUP }} -Name ${{ vars.devtest.SYNAPSEWORKSPACE }}
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
 
