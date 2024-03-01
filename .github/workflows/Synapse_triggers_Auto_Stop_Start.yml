@@ -66,12 +66,10 @@ jobs:
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
           $triggertostop = Get-Content -Path "started_triggers.json"
           echo "-----list-json-file-----"
-          echo $pwd
-          Get-ChildItem
-          Tree /F
-          cat D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json
-          echo $triggertostop
-          Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name "Trigger 2"
+          $file = "started_triggers.json"
+          $item = Get-Item $file
+          $filePath = $item.FullName
+          Write-Host "The complete path of the file is: $filePath"
           foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
