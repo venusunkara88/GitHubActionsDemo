@@ -29,7 +29,7 @@ jobs:
           $ResourceGroupName
           $SynapseWorkspace
           
-          $workspace = Get-AzSynapseWorkspace -ResourceGroupName ${{ vars.devtest.RESOURCEGROUP }} -Name ${{ vars.devtest.SYNAPSEWORKSPACE }}
+          $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
 
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
@@ -41,7 +41,7 @@ jobs:
           $trigger.Name
            if($Trigger.Properties.RuntimeState -eq "Started")
               {
-              Stop-AzSynapseTrigger -WorkspaceName ${{ vars.devtest.SYNAPSEWORKSPACE }} -Name $trigger.Name
+              Stop-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $trigger.Name
               $startedTriggers += $trigger.Name
               Write-Host "Stopped trigger $($trigger.Name)."
           } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
@@ -51,6 +51,6 @@ jobs:
 
           foreach ($triggerName in $startedTriggers) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-              Start-AzSynapseTrigger -WorkspaceName ${{ vars.devtest.SYNAPSEWORKSPACE }} -Name $triggerName
+              Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
               Write-Host "Started trigger $triggerName."
           }
