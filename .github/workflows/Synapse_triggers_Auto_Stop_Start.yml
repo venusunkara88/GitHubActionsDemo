@@ -36,11 +36,23 @@ jobs:
               Write-Host "Trigger $($trigger.Name) is already in a stopped state."
           }
           }
+          $jsonString = ConvertTo-Json -InputObject $startedTriggers
+          Out-File -FilePath "started_triggers.json" -InputObject $jsonString
           # foreach ($triggerName in $startedTriggers) {
           #     # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
           #     Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
           #     Write-Host "Started trigger $triggerName."
           # }
+
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: started-triggers
+          path: started_triggers.json
+      - name: Download artifact and access array
+        uses: actions/download-artifact@v3
+        with:
+          name: started-triggers
       - name: run script
         shell: pwsh
         run: |
@@ -51,19 +63,8 @@ jobs:
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
-          $stoppedTriggers = @()
-          foreach ($trigger in $Triggers) {
-          Write-Host "Start"
-          $trigger.Name
-           if($Trigger.Properties.RuntimeState -eq "Stopped")
-              {
-              $stoppedTriggers += $trigger.Name
-              Write-Host "Stopped trigger $($trigger.Name)."
-          } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
-              Write-Host "Trigger $($trigger.Name) is already in a stopped state."
-          }
-          }
-          foreach ($triggerName in $stoppedTriggers) {
+          $triggertostop = Get-Content -Path "started_triggers.json"
+          foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
               Write-Host "Started trigger $triggerName."
