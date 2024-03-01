@@ -73,6 +73,6 @@ jobs:
           echo $triggertostop
           foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-              Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
+              Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $trigger.Name
               Write-Host "Started trigger $triggerName."
           }
