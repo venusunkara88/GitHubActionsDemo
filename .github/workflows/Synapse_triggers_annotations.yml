@@ -21,8 +21,10 @@ jobs:
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse
 
-          $ResourceGroupName = "RG-Metrolinx"
-          $SynapseWorkspace = “testtriggerautomate”
+          # $ResourceGroupName = "RG-Metrolinx"
+          # $SynapseWorkspace = “testtriggerautomate”
+          $ResourceGroupName = "${{ vars.devtest.RESOURCEGROUP }}"
+          $SynapseWorkspace = “${{ vars.devtest.SYNAPSEWORKSPACE }}”
 
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
@@ -45,6 +47,7 @@ jobs:
           }
 
           foreach ($triggerName in $startedTriggers) {
-              Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
+              # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
+              Start-AzSynapseTrigger -WorkspaceName ${{ vars.devtest.SYNAPSEWORKSPACE }} -Name $triggerName
               Write-Host "Started trigger $triggerName."
           }
