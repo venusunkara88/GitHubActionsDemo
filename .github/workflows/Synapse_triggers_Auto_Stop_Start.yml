@@ -71,6 +71,7 @@ jobs:
           Tree /F
           cat D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json
           echo $triggertostop
+          Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name "Trigger 2"
           foreach ($triggerName in $triggertostop) {
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
