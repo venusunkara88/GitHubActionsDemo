@@ -64,7 +64,7 @@ jobs:
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
-          $triggertostop = Get-Content -Path "started_triggers.json"
+          $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
           echo "-----list-json-file-----"
           $file = "started_triggers.json"
           $item = Get-Item $file
