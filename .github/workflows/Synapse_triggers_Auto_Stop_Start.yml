@@ -71,7 +71,15 @@ jobs:
           $item = Get-Item $file
           $filePath = $item.FullName
           Write-Host "The complete path of the file is: $filePath"
+          $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
+          $authHeader = @{
+          'Content-Type'  = 'application/octet-stream'
+          'Authorization' = 'Bearer ' + $token.Token
+          }
+          $workspaceName = '${{ env.SynapseWorkspace }}'
+          
           foreach ($triggerName in $triggertostop) {
+              Invoke-WebRequest -Method POST -Uri "https://${workspaceName}.dev.azuresynapse.net/triggers/${triggerName}/start?api-version=2020-12-01" -Headers $authHeader
               # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
               # Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
               echo $triggerName
