@@ -7,8 +7,41 @@ jobs:
     runs-on: windows-latest
     env:
       SynapseWorkspace: "testtriggerautomate"
+      SynapseWorkspace2: "testtriggerautomate2"
       ResourceGroup: "RG-Metrolinx"
     steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
+          enable-AzPSSession: true
+      - name: Install the powershell dependencies and run script for 2
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+          Import-Module Az.Synapse
+
+          $ResourceGroupName = '${{ env.ResourceGroup }}'
+          $SynapseWorkspace = '${{ env.SynapseWorkspace2 }}'
+          $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
+          $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+          $startedTriggers = @()
+          foreach ($trigger in $Triggers) {
+          Write-Host "Start"
+          $trigger.Name
+           if($Trigger.Properties.RuntimeState -eq "Started")
+              {
+              Stop-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $trigger.Name
+              $startedTriggers += $trigger.Name
+              Write-Host "Stopped trigger $($trigger.Name)."
+          } elseif ($Trigger.Properties.RuntimeState -eq "Stopped") {
+              Write-Host "Trigger $($trigger.Name) is already in a stopped state."
+          }
+          }
+          echo "---------------------------"
+          echo $startedTriggers
+          $jsonString = ConvertTo-Json -InputObject $startedTriggers
+          Out-File -FilePath "started_triggers2.json" -InputObject $jsonString
+  
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
