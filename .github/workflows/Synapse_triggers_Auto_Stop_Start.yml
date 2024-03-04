@@ -41,6 +41,16 @@ jobs:
           echo $startedTriggers
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
           Out-File -FilePath "started_triggers2.json" -InputObject $jsonString
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: started-triggers2
+          path: started_triggers2.json
+
+      - name: Download artifact and access array
+        uses: actions/download-artifact@v3
+        with:
+          name: started-triggers2  
   
       - uses: azure/login@v1
         with:
@@ -72,7 +82,6 @@ jobs:
           echo $startedTriggers
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
           Out-File -FilePath "started_triggers.json" -InputObject $jsonString
-
 
       - uses: actions/upload-artifact@v3
         with:
@@ -110,6 +119,43 @@ jobs:
           
           foreach ($triggerName in $powershellArray) {
               $apicall = "https://${{ env.SynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+              echo $apicall
+              Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
+              echo $triggerName
+              Write-Host "Started trigger $triggerName."
+          }
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
+          enable-AzPSSession: true
+
+      - name: run script for 2
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+          Import-Module Az.Synapse
+
+          $ResourceGroupName = '${{ env.ResourceGroup }}'
+          $SynapseWorkspace = '${{ env.SynapseWorkspace2 }}'
+          $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
+          $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+
+          $triggertostop = Get-Content -Path "started_triggers2.json"
+          $powershellArray = $triggertostop | ConvertFrom-Json
+          echo "-----list-json-file-----"
+          echo $powershellArray
+          $file = "started_triggers2.json"
+          $item = Get-Item $file
+          $filePath = $item.FullName
+          Write-Host "The complete path of the file is: $filePath"
+          $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
+          $authHeader = @{
+            'Content-Type'  = 'application/octet-stream'
+            'Authorization' = 'Bearer ' + $token.Token
+          }
+
+          foreach ($triggerName in $powershellArray) {
+              $apicall = "https://${{ env.SynapseWorkspace2 }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
               echo $triggerName
