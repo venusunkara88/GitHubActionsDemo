@@ -71,7 +71,8 @@ jobs:
           echo "---------"
           echo $triggertostop
 
-          $powershellArray = ConvertFrom-Json -InputObject $triggertostop
+          #$powershellArray = ConvertFrom-Json -InputObject $triggertostop
+          $powershellArray = $triggertostop | ConvertFrom-Json
           echo "-----list-json-file-----"
           echo $powershellArray
           $file = "started_triggers.json"
