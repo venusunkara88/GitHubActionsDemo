@@ -22,7 +22,6 @@ jobs:
           $SynapseWorkspace = '${{ env.SynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
-          #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
           $startedTriggers = @()
           foreach ($trigger in $Triggers) {
           Write-Host "Start"
@@ -40,12 +39,6 @@ jobs:
           echo $startedTriggers
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
           Out-File -FilePath "started_triggers.json" -InputObject $jsonString
-          # Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name "Trigger 1"
-          # foreach ($triggerName in $startedTriggers) {
-          #     # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-          #     Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
-          #     Write-Host "Started trigger $triggerName."
-          # }
 
 
       - uses: actions/upload-artifact@v3
@@ -65,13 +58,10 @@ jobs:
           $SynapseWorkspace = '${{ env.SynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
-          #$stoppedTriggers = $Triggers | Where-Object { $_.Properties.RuntimeState -eq "Stopped" }
-          $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
 
-          echo "---------"
-          echo $triggertostop
+          # $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
+          $triggertostop = Get-Content -Path "started_triggers.json"
 
-          #$powershellArray = ConvertFrom-Json -InputObject $triggertostop
           $powershellArray = $triggertostop | ConvertFrom-Json
           echo "-----list-json-file-----"
           echo $powershellArray
@@ -89,8 +79,6 @@ jobs:
               $apicall = "https://${{ env.SynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
-              # Start-AzSynapseTrigger -WorkspaceName $synapseworkspace -Name $triggerName
-              # Start-AzSynapseTrigger -WorkspaceName $SynapseWorkspace -Name $triggerName
               echo $triggerName
               Write-Host "Started trigger $triggerName."
           }
