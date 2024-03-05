@@ -87,43 +87,46 @@ jobs:
         with:
           name: UAT_started-triggers
           path: UAT_started_triggers.json
+          
       - name: Download artifact and access array
         uses: actions/download-artifact@v3
         with:
           name: UAT_started-triggers
-      - name: run script
-        shell: pwsh
-        run: |
-          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
-          Import-Module Az.Synapse
-          $ResourceGroupName = '${{ env.ResourceGroup }}'
-          $SynapseWorkspace = '${{ env.TargetSynapseWorkspace }}'
-          $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
-          $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
-
-          # $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
-          $triggertostop = Get-Content -Path "UAT_started_triggers.json"
-
-          $powershellArray = $triggertostop | ConvertFrom-Json
-          echo "-----list-json-file-----"
-          echo $powershellArray
-          $file = "UAT_started_triggers.json"
-          $item = Get-Item $file
-          $filePath = $item.FullName
-          Write-Host "The complete path of the file is: $filePath"
-          $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
-          $authHeader = @{
-            'Content-Type'  = 'application/octet-stream'
-            'Authorization' = 'Bearer ' + $token.Token
-          }
           
-          foreach ($triggerName in $powershellArray) {
-              $apicall = "https://${{ env.TargetSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
-              echo $apicall
-              Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
-              echo $triggerName
-              Write-Host "Started trigger $triggerName."
-          }
+      # - name: run script
+      #   shell: pwsh
+      #   run: |
+      #     Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+      #     Import-Module Az.Synapse
+      #     $ResourceGroupName = '${{ env.ResourceGroup }}'
+      #     $SynapseWorkspace = '${{ env.TargetSynapseWorkspace }}'
+      #     $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
+      #     $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+
+      #     # $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
+      #     $triggertostop = Get-Content -Path "UAT_started_triggers.json"
+
+      #     $powershellArray = $triggertostop | ConvertFrom-Json
+      #     echo "-----list-json-file-----"
+      #     echo $powershellArray
+      #     $file = "UAT_started_triggers.json"
+      #     $item = Get-Item $file
+      #     $filePath = $item.FullName
+      #     Write-Host "The complete path of the file is: $filePath"
+      #     $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
+      #     $authHeader = @{
+      #       'Content-Type'  = 'application/octet-stream'
+      #       'Authorization' = 'Bearer ' + $token.Token
+      #     }
+          
+      #     foreach ($triggerName in $powershellArray) {
+      #         $apicall = "https://${{ env.TargetSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+      #         echo $apicall
+      #         Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
+      #         echo $triggerName
+      #         Write-Host "Started trigger $triggerName."
+      #     }
+      
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
@@ -156,6 +159,45 @@ jobs:
 
           foreach ($triggerName in $powershellArray) {
               $apicall = "https://${{ env.SourceSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+              echo $apicall
+              Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
+              echo $triggerName
+              Write-Host "Started trigger $triggerName."
+          }
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: run script
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
+          Import-Module Az.Synapse
+          $ResourceGroupName = '${{ env.ResourceGroup }}'
+          $SynapseWorkspace = '${{ env.TargetSynapseWorkspace }}'
+          $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
+          $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
+
+          # $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
+          $triggertostop = Get-Content -Path "UAT_started_triggers.json"
+
+          $powershellArray = $triggertostop | ConvertFrom-Json
+          echo "-----list-json-file-----"
+          echo $powershellArray
+          $file = "UAT_started_triggers.json"
+          $item = Get-Item $file
+          $filePath = $item.FullName
+          Write-Host "The complete path of the file is: $filePath"
+          $token = Get-AzAccessToken -ResourceUrl https://dev.azuresynapse.net
+          $authHeader = @{
+            'Content-Type'  = 'application/octet-stream'
+            'Authorization' = 'Bearer ' + $token.Token
+          }
+          
+          foreach ($triggerName in $powershellArray) {
+              $apicall = "https://${{ env.TargetSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
               echo $triggerName
