@@ -6,8 +6,8 @@ jobs:
   release:
     runs-on: windows-latest
     env:
-      SynapseWorkspace: "testtriggerautomate"
-      SynapseWorkspace2: "testtriggerautomate2"
+      TargetSynapseWorkspace: "testtriggerautomate"
+      SourceSynapseWorkspace: "testtriggerautomate2"
       ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
@@ -21,7 +21,7 @@ jobs:
           Import-Module Az.Synapse
 
           $ResourceGroupName = '${{ env.ResourceGroup }}'
-          $SynapseWorkspace = '${{ env.SynapseWorkspace2 }}'
+          $SynapseWorkspace = '${{ env.SourceSynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           $startedTriggers = @()
@@ -40,17 +40,17 @@ jobs:
           echo "---------------------------"
           echo $startedTriggers
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
-          Out-File -FilePath "started_triggers2.json" -InputObject $jsonString
+          Out-File -FilePath "Dev_started_triggers.json" -InputObject $jsonString
 
       - uses: actions/upload-artifact@v3
         with:
-          name: started-triggers2
-          path: started_triggers2.json
+          name: Dev_started-triggers
+          path: Dev_started_triggers.json
 
       - name: Download artifact and access array
         uses: actions/download-artifact@v3
         with:
-          name: started-triggers2  
+          name: Dev_started-triggers  
   
       - uses: azure/login@v1
         with:
@@ -62,7 +62,7 @@ jobs:
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse
           $ResourceGroupName = '${{ env.ResourceGroup }}'
-          $SynapseWorkspace = '${{ env.SynapseWorkspace }}'
+          $SynapseWorkspace = '${{ env.TargetSynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           $startedTriggers = @()
@@ -81,33 +81,33 @@ jobs:
           echo "---------------------------"
           echo $startedTriggers
           $jsonString = ConvertTo-Json -InputObject $startedTriggers
-          Out-File -FilePath "started_triggers.json" -InputObject $jsonString
+          Out-File -FilePath "UAT_started_triggers.json" -InputObject $jsonString
 
       - uses: actions/upload-artifact@v3
         with:
-          name: started-triggers
-          path: started_triggers.json
+          name: UAT_started-triggers
+          path: UAT_started_triggers.json
       - name: Download artifact and access array
         uses: actions/download-artifact@v3
         with:
-          name: started-triggers
+          name: UAT_started-triggers
       - name: run script
         shell: pwsh
         run: |
           Install-Module -Name Az.Synapse -AllowClobber -Scope CurrentUser -Force
           Import-Module Az.Synapse
           $ResourceGroupName = '${{ env.ResourceGroup }}'
-          $SynapseWorkspace = '${{ env.SynapseWorkspace }}'
+          $SynapseWorkspace = '${{ env.TargetSynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
 
           # $triggertostop = Get-Content -Path "D:\a\GitHubActionsDemo\GitHubActionsDemo\started_triggers.json"
-          $triggertostop = Get-Content -Path "started_triggers.json"
+          $triggertostop = Get-Content -Path "UAT_started_triggers.json"
 
           $powershellArray = $triggertostop | ConvertFrom-Json
           echo "-----list-json-file-----"
           echo $powershellArray
-          $file = "started_triggers.json"
+          $file = "UAT_started_triggers.json"
           $item = Get-Item $file
           $filePath = $item.FullName
           Write-Host "The complete path of the file is: $filePath"
@@ -118,7 +118,7 @@ jobs:
           }
           
           foreach ($triggerName in $powershellArray) {
-              $apicall = "https://${{ env.SynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+              $apicall = "https://${{ env.TargetSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
               echo $triggerName
@@ -136,15 +136,15 @@ jobs:
           Import-Module Az.Synapse
 
           $ResourceGroupName = '${{ env.ResourceGroup }}'
-          $SynapseWorkspace = '${{ env.SynapseWorkspace2 }}'
+          $SynapseWorkspace = '${{ env.SourceSynapseWorkspace }}'
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
 
-          $triggertostop = Get-Content -Path "started_triggers2.json"
+          $triggertostop = Get-Content -Path "Dev_started_triggers.json"
           $powershellArray = $triggertostop | ConvertFrom-Json
           echo "-----list-json-file-----"
           echo $powershellArray
-          $file = "started_triggers2.json"
+          $file = "Dev_started_triggers.json"
           $item = Get-Item $file
           $filePath = $item.FullName
           Write-Host "The complete path of the file is: $filePath"
@@ -155,7 +155,7 @@ jobs:
           }
 
           foreach ($triggerName in $powershellArray) {
-              $apicall = "https://${{ env.SynapseWorkspace2 }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
+              $apicall = "https://${{ env.SourceSynapseWorkspace }}.dev.azuresynapse.net/triggers/" + $triggerName + "/start?api-version=2020-12-01"
               echo $apicall
               Invoke-WebRequest -Method POST -Uri $apicall -Headers $authHeader
               echo $triggerName
