@@ -1,7 +1,7 @@
 name: Synapse_Triggers_Annotations
 on: [push]
 # on: 
-#  workflow_dispatch
+# workflow_dispatch
 jobs:
   release:
     runs-on: windows-latest
@@ -22,7 +22,7 @@ jobs:
 
           $ResourceGroupName = '${{ env.ResourceGroup }}'
           $SynapseWorkspace = '${{ env.SourceSynapseWorkspace }}'
-          az synapse role definition list --workspace-name $SynapseWorkspace
+          # az synapse role definition list --workspace-name $SynapseWorkspace
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           $startedTriggers = @()
