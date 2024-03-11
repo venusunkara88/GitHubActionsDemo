@@ -22,6 +22,7 @@ jobs:
 
           $ResourceGroupName = '${{ env.ResourceGroup }}'
           $SynapseWorkspace = '${{ env.SourceSynapseWorkspace }}'
+          az synapse role definition list --workspace-name $SynapseWorkspace
           $workspace = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspace
           $Triggers = Get-AzSynapseTrigger -WorkspaceObject $workspace
           $startedTriggers = @()
