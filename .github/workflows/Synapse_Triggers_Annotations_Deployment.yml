@@ -27,17 +27,11 @@ jobs:
       #   with:
       #     creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
       #     enable-AzPSSession: true
+      - name: Checkout branch
+        uses: actions/checkout@v1
 
       - name: Deploy to UAT
         uses: Azure/synapse-workspace-deployment@V1.8.0
-        env:
-          TargetSynapseWorkspace: "testtriggerautomate"
-          SourceSynapseWorkspace: "testtriggerautomate2"
-          ResourceGroup: "RG-Metrolinx"
-          clientAppId: '${{ secrets.CLIENT_ID }}'
-          clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
-          subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
-          tenantId: '${{ secrets.TENANT_ID }}'
         with:
           TargetWorkspaceName: '${{ env.TargetSynapseWorkspace }}'
           TemplateFile: ./synw/TemplateForWorkspace.json
