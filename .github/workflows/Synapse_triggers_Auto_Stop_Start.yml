@@ -7,7 +7,7 @@ env:
   SourceSynapseWorkspace: "testtriggerautomate2"
   ResourceGroup: "RG-Metrolinx"
   clientAppId: ${{ secrets.CLIENT_ID }}
-  clientSecret: ${{ secrets.CLIENT_SECRET }}
+  clientAppSecret: ${{ secrets.CLIENT_SECRET }}
   subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
   tenantId: ${{ secrets.TENANT_ID}}
 jobs:
