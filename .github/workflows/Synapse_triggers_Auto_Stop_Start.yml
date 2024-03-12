@@ -6,10 +6,10 @@ env:
   TargetSynapseWorkspace: "testtriggerautomate"
   SourceSynapseWorkspace: "testtriggerautomate2"
   ResourceGroup: "RG-Metrolinx"
-  clientAppId: ${{ secrets.CLIENT_ID }}
-  clientAppSecret: ${{ secrets.CLIENT_SECRET }}
-  subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
-  tenantId: ${{ secrets.TENANT_ID}}
+  clientAppId: '${{ secrets.CLIENT_ID }}'
+  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+  subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
+  tenantId: '${{ secrets.TENANT_ID }}'
 jobs:
   release:
     runs-on: windows-latest
