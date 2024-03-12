@@ -23,10 +23,10 @@ jobs:
       # tenantId: ${{ secrets.TENANT_ID}}
 
     steps:
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
-          enable-AzPSSession: true
+      # - uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
+      #     enable-AzPSSession: true
 
       - name: Deploy to UAT
         uses: Azure/synapse-workspace-deployment@V1.8.0
