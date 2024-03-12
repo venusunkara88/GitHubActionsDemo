@@ -1,4 +1,4 @@
-name: Synapse_Triggers_Annotations
+name: Synapse_Triggers_Annotations_Deployment
 on: [push]
 # on: 
 #  workflow_dispatch
