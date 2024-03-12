@@ -1,5 +1,5 @@
 name: Synapse_Triggers_Annotations
-on: [push]
+# on: [push]
 # on: 
 #  workflow_dispatch
 env:
