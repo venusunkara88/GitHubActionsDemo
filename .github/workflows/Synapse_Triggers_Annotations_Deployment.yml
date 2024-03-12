@@ -6,10 +6,10 @@ env:
   TargetSynapseWorkspace: "testtriggerautomate"
   SourceSynapseWorkspace: "testtriggerautomate2"
   ResourceGroup: "RG-Metrolinx"
-  clientAppId: '${{ secrets.CLIENT_ID }}'
-  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
-  subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
-  tenantId: '${{ secrets.TENANT_ID }}'
+  clientAppId: '${{ secrets.CLIENT_ID1 }}'
+  clientAppSecret: '${{ secrets.CLIENT_SECRET1 }}'
+  subscriptionId: '${{ secrets.SUBSCRIPTION_ID1 }}'
+  tenantId: '${{ secrets.TENANT_ID1 }}'
 jobs:
   release:
     runs-on: windows-latest
@@ -17,10 +17,10 @@ jobs:
       TargetSynapseWorkspace: "testtriggerautomate"
       SourceSynapseWorkspace: "testtriggerautomate2"
       ResourceGroup: "RG-Metrolinx"
-      clientAppId: ${{ secrets.CLIENT_ID }}
-      clientAppSecret: ${{ secrets.CLIENT_SECRET }}
-      subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
-      tenantId: ${{ secrets.TENANT_ID}}
+      # clientAppId: ${{ secrets.CLIENT_ID }}
+      # clientAppSecret: ${{ secrets.CLIENT_SECRET }}
+      # subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
+      # tenantId: ${{ secrets.TENANT_ID}}
 
     steps:
       # - uses: azure/login@v1
@@ -38,10 +38,10 @@ jobs:
           ParametersFile: ./synw/TemplateParametersForUat.json
           environment: Azure Public
           resourceGroup: '${{ env.ResourceGroup }}'
-          clientId: "$env:clientAppId"
-          clientSecret: "$env:clientAppSecret"
-          subscriptionId: "$env:subscriptionId"
-          tenantId: "$env:tenantId"
+          clientId: '${{ env.clientAppId}}'
+          clientSecret: '${{ env.clientAppSecret }}'
+          subscriptionId: '${{ env.subscriptionId }}'
+          tenantId: '${{ env.tenantId }}'
           managedIdentity: 'False'
           operation: deploy
 
