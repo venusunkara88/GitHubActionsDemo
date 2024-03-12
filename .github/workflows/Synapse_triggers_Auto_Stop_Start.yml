@@ -2,13 +2,17 @@ name: Synapse_Triggers_Annotations
 on: [push]
 # on: 
 #  workflow_dispatch
+env:
+  TargetSynapseWorkspace: "testtriggerautomate"
+  SourceSynapseWorkspace: "testtriggerautomate2"
+  ResourceGroup: "RG-Metrolinx"
 jobs:
   release:
     runs-on: windows-latest
-    env:
-      TargetSynapseWorkspace: "testtriggerautomate"
-      SourceSynapseWorkspace: "testtriggerautomate2"
-      ResourceGroup: "RG-Metrolinx"
+    # env:
+    #   TargetSynapseWorkspace: "testtriggerautomate"
+    #   SourceSynapseWorkspace: "testtriggerautomate2"
+    #   ResourceGroup: "RG-Metrolinx"
     steps:
       - uses: azure/login@v1
         with:
