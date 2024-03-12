@@ -38,10 +38,10 @@ jobs:
           ParametersFile: ./synw/TemplateParametersForUat.json
           environment: Azure Public
           resourceGroup: '${{ env.ResourceGroup }}'
-          clientId: '${{ env.clientAppId }}'
-          clientSecret: '${{ env.clientAppSecret }}'
-          subscriptionId: '${{ env.subscriptionId }}'
-          tenantId: '${{ env.tenantId }}'
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
+          tenantId: ${{ secrets.TENANT_ID}}
           managedIdentity: 'False'
           operation: deploy
 
