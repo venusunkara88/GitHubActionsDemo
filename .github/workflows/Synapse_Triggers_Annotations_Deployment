@@ -1,0 +1,44 @@
+name: Synapse_Triggers_Annotations
+on: [push]
+# on: 
+#  workflow_dispatch
+env:
+  TargetSynapseWorkspace: "testtriggerautomate"
+  SourceSynapseWorkspace: "testtriggerautomate2"
+  ResourceGroup: "RG-Metrolinx"
+  clientAppId: '${{ secrets.CLIENT_ID }}'
+  clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+  subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
+  tenantId: '${{ secrets.TENANT_ID }}'
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      TargetSynapseWorkspace: "testtriggerautomate"
+      SourceSynapseWorkspace: "testtriggerautomate2"
+      ResourceGroup: "RG-Metrolinx"
+      # clientAppId: ${{ secrets.CLIENT_ID }}
+      # clientSecret: ${{ secrets.CLIENT_SECRET }}
+      # subscriptionId: ${{ secrets.SUBSCRIPTION_ID}}
+      # tenantId: ${{ secrets.TENANT_ID}}
+
+    steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
+          enable-AzPSSession: true
+
+      - name: Deploy to UAT
+        uses: Azure/synapse-workspace-deployment@V1.8.0
+        with:
+          TargetWorkspaceName: '${{ env.TargetSynapseWorkspace }}'
+          TemplateFile: ./synw/TemplateForWorkspace.json
+          ParametersFile: ./synw/TemplateParametersForUat.json
+          environment: Azure Public
+          resourceGroup: '${{ env.ResourceGroup }}'
+          clientId: '${{ env.clientAppId }}'
+          clientSecret: '${{ env.clientAppSecret }}'
+          subscriptionId: '${{ env.subscriptionId }}'
+          tenantId: '${{ env.tenantId }}'
+          managedIdentity: 'False'
+          operation: deploy
