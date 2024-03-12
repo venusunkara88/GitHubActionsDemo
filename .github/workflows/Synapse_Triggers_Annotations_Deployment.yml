@@ -28,29 +28,40 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS_2 }}
           enable-AzPSSession: true
 
-      - name: Deploy to UAT
-        uses: Azure/synapse-workspace-deployment@V1.8.0
-        with:
-          TargetWorkspaceName: '${{ env.TargetSynapseWorkspace }}'
-          TemplateFile: ./synw/TemplateForWorkspace.json
-          ParametersFile: ./synw/TemplateParametersForUat.json
-          environment: Azure Public
-          resourceGroup: '${{ env.ResourceGroup }}'
-          # clientId: '${{ env.clientAppId }}'
-          # clientSecret: '${{ env.clientAppSecret }}'
-          subscriptionId: '${{ env.subscriptionId }}'
-          # tenantId: '${{ env.tenantId }}'
-          # managedIdentity: 'False'
-          operation: deploy
+      # - name: Deploy to UAT
+      #   uses: Azure/synapse-workspace-deployment@V1.8.0
+      #   with:
+      #     TargetWorkspaceName: '${{ env.TargetSynapseWorkspace }}'
+      #     TemplateFile: ./synw/TemplateForWorkspace.json
+      #     ParametersFile: ./synw/TemplateParametersForUat.json
+      #     environment: Azure Public
+      #     resourceGroup: '${{ env.ResourceGroup }}'
+      #     # clientId: '${{ env.clientAppId }}'
+      #     # clientSecret: '${{ env.clientAppSecret }}'
+      #     subscriptionId: '${{ env.subscriptionId }}'
+      #     # tenantId: '${{ env.tenantId }}'
+      #     # managedIdentity: 'False'
+      #     operation: deploy
 
 
       - name: Synapse workspace deployment
         uses: Azure/Synapse-workspace-deployment@V1.8.0
+        env:
+          TargetSynapseWorkspace: "testtriggerautomate"
+          SourceSynapseWorkspace: "testtriggerautomate2"
+          ResourceGroup: "RG-Metrolinx"
+          clientAppId: '${{ secrets.CLIENT_ID }}'
+          clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
+          subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
+          tenantId: '${{ secrets.TENANT_ID }}'
         with:
           TargetWorkspaceName: '${{ env.TargetSynapseWorkspace }}'
           TemplateFile: ./synw/TemplateForWorkspace.json
           ParametersFile: ./synw/TemplateParametersForUat.json
           Environment: Azure Public
+          clientId: '${{ env.clientAppId }}'
+          clientSecret: '${{ env.clientAppSecret }}'
           resourceGroup: '${{ env.ResourceGroup }}'
           subscriptionId: '${{ env.subscriptionId }}'
+          tenantId: '${{ env.tenantId }}'
           operation: Deploy
