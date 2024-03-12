@@ -6,17 +6,21 @@ env:
   TargetSynapseWorkspace: "testtriggerautomate"
   SourceSynapseWorkspace: "testtriggerautomate2"
   ResourceGroup: "RG-Metrolinx"
-  clientAppId: '${{ secrets.CLIENT_ID }}'
-  clientSecret: '${{ secrets.CLIENT_SECRET }}'
-  subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
-  tenantId: '${{ secrets.TENANT_ID}}'
+  # clientAppId: '${{ secrets.CLIENT_ID }}'
+  # clientSecret: '${{ secrets.CLIENT_SECRET }}'
+  # subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
+  # tenantId: '${{ secrets.TENANT_ID}}'
 jobs:
   release:
     runs-on: windows-latest
-    # env:
-    #   TargetSynapseWorkspace: "testtriggerautomate"
-    #   SourceSynapseWorkspace: "testtriggerautomate2"
-    #   ResourceGroup: "RG-Metrolinx"
+    env:
+      TargetSynapseWorkspace: "testtriggerautomate"
+      SourceSynapseWorkspace: "testtriggerautomate2"
+      ResourceGroup: "RG-Metrolinx"
+      clientAppId: '${{ secrets.CLIENT_ID }}'
+      clientSecret: '${{ secrets.CLIENT_SECRET }}'
+      subscriptionId: '${{ secrets.SUBSCRIPTION_ID}}'
+      tenantId: '${{ secrets.TENANT_ID}}'
     steps:
       - uses: azure/login@v1
         with:
