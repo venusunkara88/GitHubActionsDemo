@@ -1,10 +1,10 @@
 name: Synapse_Triggers_Annotations_Deployment
-on: push
-# on: 
-# workflow_dispatch
+# on: push
+on: 
+  workflow_dispatch:
 env:
         TargetSynapseWorkspace: "testtriggerautomate1"
-        SourceSynapseWorkspace: "testtriggerautomate"
+        SourceSynapseWorkspace: "testtriggerautomate2"
         ResourceGroup: "RG-Metrolinx"
         clientAppId: '${{ secrets.CLIENT_ID }}'
         clientAppSecret: '${{ secrets.CLIENT_SECRET }}'
